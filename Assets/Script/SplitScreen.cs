@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SplitScreenController : MonoBehaviour
@@ -9,65 +7,70 @@ public class SplitScreenController : MonoBehaviour
     public GameObject player1;    // Player 1 GameObject
     public GameObject player2;    // Player 2 GameObject
     public float cameraHeight = 20f;  // Camera height above the players
-
     public float moveSpeed = 6f;  // Player movement speed
 
     private Vector3 player1Position;
     private Vector3 player2Position;
 
-    // Start is called before the first frame update
+    private CharacterController player1Controller;
+    private CharacterController player2Controller;
+
     void Start()
     {
-        // Set up the cameras for split-screen
         SetUpSplitScreen();
+
+        // Get the CharacterControllers for both players
+        player1Controller = player1.GetComponent<CharacterController>();
+        player2Controller = player2.GetComponent<CharacterController>();
     }
 
     void Update()
     {
-        // Update player positions
-
         player1Position = player1.transform.position;
-        // player2Position = player2.transform.position;
+        player2Position = player2.transform.position;
 
-        // Adjust cameras based on positions
         UpdateCameraPositions();
 
-        // Handle player movement (simplified example for both players)
-        HandlePlayerMovement(player1);
-        // HandlePlayerMovement(player2);
+        HandlePlayerMovement(player1, player1Controller, 1);
+        HandlePlayerMovement(player2, player2Controller, 2);
     }
 
-    // Set up split-screen camera views
     void SetUpSplitScreen()
     {
-        // Player 1 camera view (left side of the screen)
         playerCamera1.rect = new Rect(0f, 0f, 0.5f, 1f);  // Left half
-
-        // Player 2 camera view (right side of the screen)
         playerCamera2.rect = new Rect(0.5f, 0f, 0.5f, 1f);  // Right half
     }
 
-    // Update the camera positions to follow each player
     void UpdateCameraPositions()
     {
-        // Player 1 camera follows Player 1
         Vector3 player1CameraPosition = new Vector3(player1Position.x, cameraHeight, player1Position.z);
         playerCamera1.transform.position = player1CameraPosition;
         playerCamera1.transform.LookAt(player1Position);
 
-        // Player 2 camera follows Player 2
         Vector3 player2CameraPosition = new Vector3(player2Position.x, cameraHeight, player2Position.z);
         playerCamera2.transform.position = player2CameraPosition;
         playerCamera2.transform.LookAt(player2Position);
     }
 
-    // Handle player movement (simplified for this example)
-    void HandlePlayerMovement(GameObject player)
+    void HandlePlayerMovement(GameObject player, CharacterController characterController, int playerNumber)
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal = 0f;
+        float vertical = 0f;
 
-        Vector3 movement = new Vector3(horizontal, 0, vertical) * moveSpeed * Time.deltaTime;
-        player.transform.Translate(movement);
+        if (playerNumber == 1)
+        {
+            // Contrôles du joueur 1
+            horizontal = Input.GetKey(InputManager.moveLeftKey) ? -1 : (Input.GetKey(InputManager.moveRightKey) ? 1 : 0);
+            vertical = Input.GetKey(InputManager.moveUpKey) ? 1 : (Input.GetKey(InputManager.moveDownKey) ? -1 : 0);
+        }
+        else if (playerNumber == 2)
+        {
+            // Contrôles du joueur 2
+            horizontal = Input.GetKey(InputManager.moveLeftKeyP2) ? -1 : (Input.GetKey(InputManager.moveRightKeyP2) ? 1 : 0);
+            vertical = Input.GetKey(InputManager.moveUpKeyP2) ? 1 : (Input.GetKey(InputManager.moveDownKeyP2) ? -1 : 0);
+        }
+
+        Vector3 movement = new Vector3(horizontal, 0, vertical).normalized * moveSpeed * Time.deltaTime;
+        characterController.Move(movement);
     }
 }
