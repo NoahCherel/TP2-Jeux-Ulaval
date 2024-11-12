@@ -33,6 +33,7 @@ public class TopDownController : MonoBehaviour
 
         // Déterminer quel joueur ce contrôleur gère
         playerID = gameObject.CompareTag("Player2") ? 2 : 1;
+        Debug.Log(playerID);
 
         // Charger les contrôles personnalisés en fonction du joueur
         LoadCustomControls();

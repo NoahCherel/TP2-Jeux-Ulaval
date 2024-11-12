@@ -25,15 +25,16 @@ public class SplitScreenController : MonoBehaviour
     void Update()
     {
         // Update player positions
+
         player1Position = player1.transform.position;
-        player2Position = player2.transform.position;
+        // player2Position = player2.transform.position;
 
         // Adjust cameras based on positions
         UpdateCameraPositions();
 
         // Handle player movement (simplified example for both players)
         HandlePlayerMovement(player1);
-        HandlePlayerMovement(player2);
+        // HandlePlayerMovement(player2);
     }
 
     // Set up split-screen camera views
