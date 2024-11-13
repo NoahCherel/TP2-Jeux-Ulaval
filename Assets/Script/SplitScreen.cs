@@ -1,14 +1,19 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class SplitScreenController : MonoBehaviour
 {
-    public Camera playerCamera1;  // Camera for Player 1
-    public Camera playerCamera2;  // Camera for Player 2
-    public GameObject player1;    // Player 1 GameObject
-    public GameObject player2;    // Player 2 GameObject
-    public float cameraHeight = 20f;  // Camera height above the players
-    public float moveSpeed = 6f;  // Player movement speed
-
+    public Camera playerCamera1;  
+    public Camera playerCamera2;  
+    public GameObject player1;    
+    public GameObject player2;    
+    public float cameraHeight = 20f;  
+    public float moveSpeed = 6f;  
+    public PlayerHealth player1Health;
+    public PlayerHealth player2Health;
+    public TMP_Text player1HPText;  // Reference to Player 1 HP Text
+    public TMP_Text player2HPText;  // Reference to Player 2 HP Text
     private Vector3 player1Position;
     private Vector3 player2Position;
 
@@ -19,9 +24,12 @@ public class SplitScreenController : MonoBehaviour
     {
         SetUpSplitScreen();
 
-        // Get the CharacterControllers for both players
         player1Controller = player1.GetComponent<CharacterController>();
         player2Controller = player2.GetComponent<CharacterController>();
+
+        // Initialize health displays
+        setUpPlayerHealth();
+        UpdateHealthUI();
     }
 
     void Update()
@@ -33,12 +41,27 @@ public class SplitScreenController : MonoBehaviour
 
         HandlePlayerMovement(player1, player1Controller, 1);
         HandlePlayerMovement(player2, player2Controller, 2);
+
+        UpdateHealthUI();  // Update health UI in case of health changes
     }
 
     void SetUpSplitScreen()
     {
-        playerCamera1.rect = new Rect(0f, 0f, 0.5f, 1f);  // Left half
-        playerCamera2.rect = new Rect(0.5f, 0f, 0.5f, 1f);  // Right half
+        playerCamera1.rect = new Rect(0f, 0f, 0.5f, 1f);  
+        playerCamera2.rect = new Rect(0.5f, 0f, 0.5f, 1f);  
+    }
+
+    void setUpPlayerHealth()
+    {
+        // Adjust Player 1 HP Text to be in top-left corner of left screen
+        player1HPText.rectTransform.anchorMin = new Vector2(0, 1);
+        player1HPText.rectTransform.anchorMax = new Vector2(0, 1);
+        player1HPText.rectTransform.anchoredPosition = new Vector2(100, -10); // Slight padding from corner
+
+        // Adjust Player 2 HP Text to be in top-left corner of right screen
+        player2HPText.rectTransform.anchorMin = new Vector2(0.5f, 1); // Right screen starts at 0.5 width
+        player2HPText.rectTransform.anchorMax = new Vector2(0.5f, 1);
+        player2HPText.rectTransform.anchoredPosition = new Vector2(100, -10); // Padding from corner
     }
 
     void UpdateCameraPositions()
@@ -59,18 +82,29 @@ public class SplitScreenController : MonoBehaviour
 
         if (playerNumber == 1)
         {
-            // Contrôles du joueur 1
             horizontal = Input.GetKey(InputManager.moveLeftKey) ? -1 : (Input.GetKey(InputManager.moveRightKey) ? 1 : 0);
             vertical = Input.GetKey(InputManager.moveUpKey) ? 1 : (Input.GetKey(InputManager.moveDownKey) ? -1 : 0);
         }
         else if (playerNumber == 2)
         {
-            // Contrôles du joueur 2
             horizontal = Input.GetKey(InputManager.moveLeftKeyP2) ? -1 : (Input.GetKey(InputManager.moveRightKeyP2) ? 1 : 0);
             vertical = Input.GetKey(InputManager.moveUpKeyP2) ? 1 : (Input.GetKey(InputManager.moveDownKeyP2) ? -1 : 0);
         }
 
         Vector3 movement = new Vector3(horizontal, 0, vertical).normalized * moveSpeed * Time.deltaTime;
+
+        if (movement != Vector3.zero)
+        {
+            player.transform.forward = movement;
+        }
+
         characterController.Move(movement);
+    }
+
+    // Update the health UI for both players
+    void UpdateHealthUI()
+    {
+        player1HPText.text = "HP: " + player1Health.currentHealth;
+        player2HPText.text = "HP: " + player2Health.currentHealth;
     }
 }
