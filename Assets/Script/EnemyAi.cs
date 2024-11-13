@@ -3,8 +3,8 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    public Transform player1;
-    public Transform player2;
+    public GameObject player1;    
+    public GameObject player2;    
     public float detectionRange = 10f;
     public float moveSpeed = 3f;
     public float attackRange = 2f;
@@ -15,7 +15,9 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        // Sélectionner le joueur le plus proche
+        player1 = GameObject.Find("Capsule");
+        player2 = GameObject.Find("Capsule2");
+
         Transform targetPlayer = GetClosestPlayer();
 
         if (targetPlayer != null)
@@ -39,13 +41,17 @@ public class EnemyAI : MonoBehaviour
 
     Transform GetClosestPlayer()
     {
-        if (player1 == null && player2 == null)
-            return null;
+        float distanceToPlayer1 = Vector3.Distance(transform.position, player1.transform.position);
+        float distanceToPlayer2 = Vector3.Distance(transform.position, player2.transform.position);
 
-        float distanceToPlayer1 = player1 ? Vector3.Distance(transform.position, player1.position) : float.MaxValue;
-        float distanceToPlayer2 = player2 ? Vector3.Distance(transform.position, player2.position) : float.MaxValue;
-
-        return (distanceToPlayer1 < distanceToPlayer2) ? player1 : player2;
+        if (distanceToPlayer1 < distanceToPlayer2)
+        {
+            return player1.transform;
+        }
+        else
+        {
+            return player2.transform;
+        }
     }
 
     void MoveTowardsPlayer(Transform player)
