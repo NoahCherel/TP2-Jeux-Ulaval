@@ -9,6 +9,7 @@ public class Shooter : MonoBehaviour
     public Transform firePoint; // Point d'origine des tirs
     public int PlayerId; // Identifiant du joueur
     private KeyCode shootKey; // Touche de tir
+    public PauseMenuManager pauseMenuManager;
 
     CharacterController characterController;
 
@@ -27,6 +28,7 @@ public class Shooter : MonoBehaviour
 
     void Update()
     {
+        if (pauseMenuManager.pauseMenuUI.activeSelf) return;
         if (Input.GetKeyDown(shootKey))
         {
             Shoot();

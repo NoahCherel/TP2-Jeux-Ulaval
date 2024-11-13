@@ -26,6 +26,8 @@ public class SplitScreenController : MonoBehaviour
     private CharacterController player1Controller;
     private CharacterController player2Controller;
 
+    public PauseMenuManager pauseMenuManager;
+
     void Start()
     {
         SetUpSplitScreen();
@@ -42,6 +44,8 @@ public class SplitScreenController : MonoBehaviour
 
     void Update()
     {
+        if (pauseMenuManager.pauseMenuUI.activeSelf) return;
+
         player1Position = player1.transform.position;
         player2Position = player2.transform.position;
 
@@ -50,7 +54,7 @@ public class SplitScreenController : MonoBehaviour
         HandlePlayerMovement(player1, player1Controller, 1);
         HandlePlayerMovement(player2, player2Controller, 2);
 
-        UpdateHealthUI();  // Update health UI in case of health changes
+        UpdateHealthUI();  // Met à jour l'UI des PVs
         UpdateScoreUI();
     }
 

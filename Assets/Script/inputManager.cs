@@ -16,8 +16,12 @@ public class InputManager : MonoBehaviour
     public static KeyCode moveRightKeyP2 = KeyCode.RightArrow;
     public static KeyCode attackKeyP2 = KeyCode.Return;
 
+    // Pause
+    public static KeyCode pause = KeyCode.Escape;
+    public PauseMenuManager pauseMenuManager;
+
     private void Awake()
-    {
+    {   
         LoadKeys();
     }
 
