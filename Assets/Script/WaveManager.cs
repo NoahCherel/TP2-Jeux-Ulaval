@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
-    public GameObject enemyPrefab;  // Enemy prefab to spawn
+    public GameObject enemyPrefab;         // Enemy prefab to spawn
+    public GameObject parentObject;        // Parent GameObject for enemies
     public int initialEnemiesPerWave = 5;  // Number of enemies in the first wave
     public int enemyIncreasePerWave = 2;   // How many additional enemies per wave
     public float spawnInterval = 3f;       // Time between waves
@@ -45,7 +46,13 @@ public class WaveManager : MonoBehaviour
             transform.position.z + Random.Range(-spawnAreaHeight / 2f, spawnAreaHeight / 2f)
         );
 
-        // Instantiate the enemy at the chosen spawn position
+        // Instantiate the enemy at the chosen spawn position with parent set to parentObject
         GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+
+        // Set the parent of the enemy to the specified parentObject
+        if (parentObject != null)
+        {
+            enemy.transform.parent = parentObject.transform;
+        }
     }
 }

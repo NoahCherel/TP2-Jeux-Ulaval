@@ -12,8 +12,14 @@ public class SplitScreenController : MonoBehaviour
     public float moveSpeed = 6f;  
     public PlayerHealth player1Health;
     public PlayerHealth player2Health;
-    public TMP_Text player1HPText;  // Reference to Player 1 HP Text
-    public TMP_Text player2HPText;  // Reference to Player 2 HP Text
+
+    public PlayerScore player1Score;
+    public PlayerScore player2Score;
+    public TMP_Text player1HPText;
+    public TMP_Text player2HPText;
+
+    public TMP_Text player1ScoreText;
+    public TMP_Text player2ScoreText;
     private Vector3 player1Position;
     private Vector3 player2Position;
 
@@ -29,7 +35,9 @@ public class SplitScreenController : MonoBehaviour
 
         // Initialize health displays
         setUpPlayerHealth();
+        setUpPlayerScore();
         UpdateHealthUI();
+        UpdateScoreUI();
     }
 
     void Update()
@@ -43,6 +51,7 @@ public class SplitScreenController : MonoBehaviour
         HandlePlayerMovement(player2, player2Controller, 2);
 
         UpdateHealthUI();  // Update health UI in case of health changes
+        UpdateScoreUI();
     }
 
     void SetUpSplitScreen()
@@ -62,6 +71,19 @@ public class SplitScreenController : MonoBehaviour
         player2HPText.rectTransform.anchorMin = new Vector2(0.5f, 1); // Right screen starts at 0.5 width
         player2HPText.rectTransform.anchorMax = new Vector2(0.5f, 1);
         player2HPText.rectTransform.anchoredPosition = new Vector2(100, -10); // Padding from corner
+    }
+
+    void setUpPlayerScore()
+    {
+        // Adjust Player 1 Score Text to be in top-left corner of left screen
+        player1ScoreText.rectTransform.anchorMin = new Vector2(0, 1);
+        player1ScoreText.rectTransform.anchorMax = new Vector2(0, 1);
+        player1ScoreText.rectTransform.anchoredPosition = new Vector2(400, -10); // Slight padding from corner
+
+        // Adjust Player 2 Score Text to be in top-left corner of right screen
+        player2ScoreText.rectTransform.anchorMin = new Vector2(0.5f, 1); // Right screen starts at 0.5 width
+        player2ScoreText.rectTransform.anchorMax = new Vector2(0.5f, 1);
+        player2ScoreText.rectTransform.anchoredPosition = new Vector2(400, -10); // Padding from corner
     }
 
     void UpdateCameraPositions()
@@ -101,10 +123,15 @@ public class SplitScreenController : MonoBehaviour
         characterController.Move(movement);
     }
 
-    // Update the health UI for both players
     void UpdateHealthUI()
     {
         player1HPText.text = "HP: " + player1Health.currentHealth;
         player2HPText.text = "HP: " + player2Health.currentHealth;
+    }
+
+    void UpdateScoreUI()
+    {
+        player1ScoreText.text = "Score: " + player1Score.currentScore;
+        player2ScoreText.text = "Score: " + player2Score.currentScore;
     }
 }
