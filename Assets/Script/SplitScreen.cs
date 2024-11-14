@@ -69,12 +69,12 @@ public class SplitScreenController : MonoBehaviour
         // Adjust Player 1 HP Text to be in top-left corner of left screen
         player1HPText.rectTransform.anchorMin = new Vector2(0, 1);
         player1HPText.rectTransform.anchorMax = new Vector2(0, 1);
-        player1HPText.rectTransform.anchoredPosition = new Vector2(100, -10); // Slight padding from corner
+        player1HPText.rectTransform.anchoredPosition = new Vector2(160, -10); // Slight padding from corner
 
         // Adjust Player 2 HP Text to be in top-left corner of right screen
         player2HPText.rectTransform.anchorMin = new Vector2(0.5f, 1); // Right screen starts at 0.5 width
         player2HPText.rectTransform.anchorMax = new Vector2(0.5f, 1);
-        player2HPText.rectTransform.anchoredPosition = new Vector2(100, -10); // Padding from corner
+        player2HPText.rectTransform.anchoredPosition = new Vector2(160, -10); // Padding from corner
     }
 
     void setUpPlayerScore()
@@ -82,12 +82,12 @@ public class SplitScreenController : MonoBehaviour
         // Adjust Player 1 Score Text to be in top-left corner of left screen
         player1ScoreText.rectTransform.anchorMin = new Vector2(0, 1);
         player1ScoreText.rectTransform.anchorMax = new Vector2(0, 1);
-        player1ScoreText.rectTransform.anchoredPosition = new Vector2(400, -10); // Slight padding from corner
+        player1ScoreText.rectTransform.anchoredPosition = new Vector2(160, -60); // Slight padding from corner
 
         // Adjust Player 2 Score Text to be in top-left corner of right screen
         player2ScoreText.rectTransform.anchorMin = new Vector2(0.5f, 1); // Right screen starts at 0.5 width
         player2ScoreText.rectTransform.anchorMax = new Vector2(0.5f, 1);
-        player2ScoreText.rectTransform.anchoredPosition = new Vector2(400, -10); // Padding from corner
+        player2ScoreText.rectTransform.anchoredPosition = new Vector2(160, -60); // Padding from corner
     }
 
     void UpdateCameraPositions()
@@ -121,7 +121,7 @@ public class SplitScreenController : MonoBehaviour
 
         if (movement != Vector3.zero)
         {
-            player.transform.forward = movement;
+            player.transform.forward = new Vector3(movement.x, 0, movement.z);
         }
 
         characterController.Move(movement);

@@ -6,11 +6,19 @@ public class Projectile : MonoBehaviour
     public float lifeTime = 2f; // Durée de vie avant destruction
 
     private PlayerScore playerScore;
+    public int playerID;
 
     void Start()
     {
-        // Récupérer la référence du PlayerScore dans la scène
-        playerScore = FindObjectOfType<PlayerScore>();
+        // Récupérer la référence du PlayerScore spécifique au joueur qui a tiré le projectile
+        if (playerID == 1)
+        {
+            playerScore = GameObject.Find("Capsule").GetComponent<PlayerScore>();
+        }
+        else
+        {
+            playerScore = GameObject.Find("Capsule2").GetComponent<PlayerScore>();
+        }
 
         // Détruire le projectile après un certain temps pour éviter de surcharger la scène
         Destroy(gameObject, lifeTime);
@@ -38,7 +46,7 @@ public class Projectile : MonoBehaviour
     {
         if (playerScore != null)
         {
-            playerScore.AddScore(10); // Ajouter 10 points, par exemple
+            playerScore.AddScore(10, playerID);
         }
     }
 }

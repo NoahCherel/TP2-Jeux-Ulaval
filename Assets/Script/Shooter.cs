@@ -40,6 +40,7 @@ public class Shooter : MonoBehaviour
         // Instancie le projectile au niveau de firePoint
         if (projectilePrefab != null && firePoint != null)
         {
+            projectilePrefab.GetComponent<Projectile>().playerID = PlayerId;
             Instantiate(projectilePrefab, firePoint.position, firePoint.rotation);
         }
     }

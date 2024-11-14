@@ -6,15 +6,15 @@ public class PlayerScore : MonoBehaviour
 {
     public int score = 0;
     public int currentScore { get; private set; }
+    public int playerID;
 
     void Awake()
     {
         currentScore = score;
     }
 
-    public void AddScore(int amount)
+    public void AddScore(int amount, int playerID)
     {
         currentScore += amount;
-        Debug.Log("Score ajouté ! Score actuel : " + currentScore);
     }
 }
