@@ -3,8 +3,8 @@ using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    public GameObject player1;    
-    public GameObject player2;    
+    private Transform player1;
+    private Transform player2;   
     public float detectionRange = 10f;
     public float moveSpeed = 3f;
     public float attackRange = 2f;
@@ -16,10 +16,22 @@ public class EnemyAI : MonoBehaviour
 
     private float nextAttackTime = 0f;
 
+    private PlayerHealth player1Health;
+    private PlayerHealth player2Health;
+
+    void Start()
+    {
+        player1 = GameObject.FindWithTag("Player").transform;
+        player2 = GameObject.FindWithTag("Player2").transform;
+
+        player1Health = player1.GetComponent<PlayerHealth>();
+        player2Health = player2.GetComponent<PlayerHealth>();
+    }
+
     void Update()
     {
-        player1 = GameObject.Find("Capsule");
-        player2 = GameObject.Find("Capsule2");
+        player1 = GameObject.Find("Capsule").transform;
+        player2 = GameObject.Find("Capsule2").transform;
 
         Transform targetPlayer = GetClosestPlayer();
 
@@ -44,16 +56,16 @@ public class EnemyAI : MonoBehaviour
 
     Transform GetClosestPlayer()
     {
-        float distanceToPlayer1 = Vector3.Distance(transform.position, player1.transform.position);
-        float distanceToPlayer2 = Vector3.Distance(transform.position, player2.transform.position);
+        float distanceToPlayer1 = player1Health.isDead ? float.MaxValue : Vector3.Distance(transform.position, player1.position);
+        float distanceToPlayer2 = player2Health.isDead ? float.MaxValue : Vector3.Distance(transform.position, player2.position);
 
         if (distanceToPlayer1 < distanceToPlayer2)
         {
-            return player1.transform;
+            return player1Health.isDead ? null : player1;
         }
         else
         {
-            return player2.transform;
+            return player2Health.isDead ? null : player2;
         }
     }
 

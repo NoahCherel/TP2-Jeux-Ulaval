@@ -12,6 +12,7 @@ public class PauseMenuManager : MonoBehaviour
     private void Start()
     {
         pauseMenuUI.SetActive(false);
+        Time.timeScale = 1f;
 
         resumeButton.onClick.AddListener(ResumeGame);
         quitButton.onClick.AddListener(QuitGame);
