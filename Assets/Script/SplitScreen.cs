@@ -15,11 +15,16 @@ public class SplitScreenController : MonoBehaviour
 
     public PlayerScore player1Score;
     public PlayerScore player2Score;
+
     public TMP_Text player1HPText;
     public TMP_Text player2HPText;
 
     public TMP_Text player1ScoreText;
     public TMP_Text player2ScoreText;
+
+    public WaveManager waveManager;
+    public TMP_Text WaveNumverText;
+
     private Vector3 player1Position;
     private Vector3 player2Position;
 
@@ -38,8 +43,11 @@ public class SplitScreenController : MonoBehaviour
         // Initialize health displays
         setUpPlayerHealth();
         setUpPlayerScore();
+        SetUpWaveNumber();
+
         UpdateHealthUI();
         UpdateScoreUI();
+        UpdateWaveNumberUI();
     }
 
     void Update()
@@ -56,12 +64,20 @@ public class SplitScreenController : MonoBehaviour
 
         UpdateHealthUI();  // Met à jour l'UI des PVs
         UpdateScoreUI();
+        UpdateWaveNumberUI();
     }
 
     void SetUpSplitScreen()
     {
         playerCamera1.rect = new Rect(0f, 0f, 0.5f, 1f);  
         playerCamera2.rect = new Rect(0.5f, 0f, 0.5f, 1f);  
+    }
+
+    void SetUpWaveNumber()
+    {
+        WaveNumverText.rectTransform.anchorMin = new Vector2(0.5f, 1); // Right screen starts at 0.5 width
+        WaveNumverText.rectTransform.anchorMax = new Vector2(0.5f, 1);
+        WaveNumverText.rectTransform.anchoredPosition = new Vector2(50, -10); // Padding from corner
     }
 
     void setUpPlayerHealth()
@@ -71,10 +87,10 @@ public class SplitScreenController : MonoBehaviour
         player1HPText.rectTransform.anchorMax = new Vector2(0, 1);
         player1HPText.rectTransform.anchoredPosition = new Vector2(160, -10); // Slight padding from corner
 
-        // Adjust Player 2 HP Text to be in top-left corner of right screen
-        player2HPText.rectTransform.anchorMin = new Vector2(0.5f, 1); // Right screen starts at 0.5 width
-        player2HPText.rectTransform.anchorMax = new Vector2(0.5f, 1);
-        player2HPText.rectTransform.anchoredPosition = new Vector2(160, -10); // Padding from corner
+        // Adjust Player 2 HP Text to be in top-right corner of right screen
+        player2HPText.rectTransform.anchorMin = new Vector2(1, 1);
+        player2HPText.rectTransform.anchorMax = new Vector2(1, 1);
+        player2HPText.rectTransform.anchoredPosition = new Vector2(-50, -10); // Padding from corner
     }
 
     void setUpPlayerScore()
@@ -84,10 +100,10 @@ public class SplitScreenController : MonoBehaviour
         player1ScoreText.rectTransform.anchorMax = new Vector2(0, 1);
         player1ScoreText.rectTransform.anchoredPosition = new Vector2(160, -60); // Slight padding from corner
 
-        // Adjust Player 2 Score Text to be in top-left corner of right screen
-        player2ScoreText.rectTransform.anchorMin = new Vector2(0.5f, 1); // Right screen starts at 0.5 width
-        player2ScoreText.rectTransform.anchorMax = new Vector2(0.5f, 1);
-        player2ScoreText.rectTransform.anchoredPosition = new Vector2(160, -60); // Padding from corner
+        // Adjust Player 2 Score Text to be in top-right corner of right screen
+        player2ScoreText.rectTransform.anchorMin = new Vector2(1, 1); // Right screen starts at 0.5 width
+        player2ScoreText.rectTransform.anchorMax = new Vector2(1, 1);
+        player2ScoreText.rectTransform.anchoredPosition = new Vector2(-50, -60); // Padding from corner
     }
 
     void UpdateCameraPositions()
@@ -137,5 +153,10 @@ public class SplitScreenController : MonoBehaviour
     {
         player1ScoreText.text = "Score: " + player1Score.currentScore;
         player2ScoreText.text = "Score: " + player2Score.currentScore;
+    }
+
+    void UpdateWaveNumberUI()
+    {
+        WaveNumverText.text = "Wave: " + waveManager.currentWave;
     }
 }

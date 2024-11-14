@@ -11,6 +11,9 @@ public class EnemyAI : MonoBehaviour
     public int damage = 10;
     public float attackCooldown = 1.5f;
 
+    public delegate void EnemyDestroyed();
+    public event EnemyDestroyed OnDestroyed;
+
     private float nextAttackTime = 0f;
 
     void Update()
@@ -82,6 +85,14 @@ public class EnemyAI : MonoBehaviour
         if (playerHealth != null)
         {
             playerHealth.TakeDamage(damage);
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (OnDestroyed != null)
+        {
+            OnDestroyed.Invoke();
         }
     }
 }
