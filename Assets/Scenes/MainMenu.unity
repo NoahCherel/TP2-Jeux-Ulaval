@@ -4733,7 +4733,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d22029dfe236b44bf9bef520941d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuManager: {fileID: 0}
 --- !u!114 &767572429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4772,6 +4771,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 767572426}
   m_CullTransparentMesh: 1
+--- !u!1 &773252469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 773252471}
+  - component: {fileID: 773252470}
+  m_Layer: 0
+  m_Name: DropdownHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &773252470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773252469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93c9baa953f57884e96e3fbee2783bf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1Dropdown: {fileID: 430637592}
+  player2Dropdown: {fileID: 1204820726}
+--- !u!4 &773252471
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 773252469}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1155.4657, y: 642.68365, z: 1.4621633}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &802664354
 GameObject:
   m_ObjectHideFlags: 0
@@ -8234,7 +8279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d22029dfe236b44bf9bef520941d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuManager: {fileID: 0}
 --- !u!1 &1450061673
 GameObject:
   m_ObjectHideFlags: 0
@@ -9563,7 +9607,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08d22029dfe236b44bf9bef520941d4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuManager: {fileID: 0}
 --- !u!114 &1606047544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12712,3 +12755,4 @@ SceneRoots:
   - {fileID: 1209058424}
   - {fileID: 2013419256}
   - {fileID: 845643874}
+  - {fileID: 773252471}

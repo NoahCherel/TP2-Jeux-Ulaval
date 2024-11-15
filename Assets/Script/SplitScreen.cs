@@ -78,15 +78,34 @@ public class SplitScreenController : MonoBehaviour
         float horizontal = 0f;
         float vertical = 0f;
 
-        if (playerNumber == 1)
+        // Si le joueur utilise une manette, on récupère les axes des manettes
+        if (playerNumber == 1 && InputManager.isPlayer1UsingController)
         {
-            horizontal = Input.GetKey(InputManager.moveLeftKey) ? -1 : (Input.GetKey(InputManager.moveRightKey) ? 1 : 0);
-            vertical = Input.GetKey(InputManager.moveUpKey) ? 1 : (Input.GetKey(InputManager.moveDownKey) ? -1 : 0);
+            Debug.Log("ControllerJ1");
+            horizontal = Input.GetAxis("J1Horizontal"); // Manette Player 1
+            vertical = Input.GetAxis("J1Vertical"); // Manette Player 1
         }
-        else if (playerNumber == 2)
+        else if (playerNumber == 2 && InputManager.isPlayer2UsingController)
         {
-            horizontal = Input.GetKey(InputManager.moveLeftKeyP2) ? -1 : (Input.GetKey(InputManager.moveRightKeyP2) ? 1 : 0);
-            vertical = Input.GetKey(InputManager.moveUpKeyP2) ? 1 : (Input.GetKey(InputManager.moveDownKeyP2) ? -1 : 0);
+            Debug.Log("ControllerJ2");
+            horizontal = Input.GetAxis("J2Horizontal"); // Manette Player 2
+            vertical = Input.GetAxis("J2Vertical"); // Manette Player 2
+        }
+        else
+        {
+            // Sinon, on utilise les touches clavier
+            if (playerNumber == 1)
+            {
+                Debug.Log("KeyboardJ1");
+                horizontal = Input.GetKey(InputManager.moveLeftKey) ? -1 : (Input.GetKey(InputManager.moveRightKey) ? 1 : 0);
+                vertical = Input.GetKey(InputManager.moveUpKey) ? 1 : (Input.GetKey(InputManager.moveDownKey) ? -1 : 0);
+            }
+            else if (playerNumber == 2)
+            {
+                Debug.Log("KeyboardJ2");
+                horizontal = Input.GetKey(InputManager.moveLeftKeyP2) ? -1 : (Input.GetKey(InputManager.moveRightKeyP2) ? 1 : 0);
+                vertical = Input.GetKey(InputManager.moveUpKeyP2) ? 1 : (Input.GetKey(InputManager.moveDownKeyP2) ? -1 : 0);
+            }
         }
 
         Vector3 movement = new Vector3(horizontal, 0, vertical).normalized * moveSpeed * Time.deltaTime;
@@ -95,6 +114,7 @@ public class SplitScreenController : MonoBehaviour
 
         characterController.Move(movement);
     }
+
     void UpdateCameraPositions()
     {
         if (!player1Health.isDead)
