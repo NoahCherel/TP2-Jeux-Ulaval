@@ -5,13 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class Shooter : MonoBehaviour
 {
-    public GameObject projectilePrefab; // Préfab du projectile
-    public Transform firePoint; // Point d'origine des tirs
-    public int PlayerId; // Identifiant du joueur
-    private KeyCode shootKey; // Touche de tir
+    public GameObject projectilePrefab;
+    public Transform firePoint;
+    public int PlayerId;
+    private KeyCode shootKey;
     public PauseMenuManager pauseMenuManager;
 
-    // Référence au InputManager pour savoir si le joueur utilise le clavier ou la manette
     private bool isUsingController;
 
     CharacterController characterController;
@@ -20,45 +19,46 @@ public class Shooter : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
 
-        // Récupérer si le joueur utilise un clavier ou une manette
         if (PlayerId == 1)
         {
             shootKey = InputManager.attackKey;
-            isUsingController = InputManager.isPlayer1UsingController; // Vérifie si Player1 utilise la manette
-        }
-        else
-        {
+            isUsingController = InputManager.isPlayer1UsingController;
+        } else {
             shootKey = InputManager.attackKeyP2;
-            isUsingController = InputManager.isPlayer2UsingController; // Vérifie si Player2 utilise la manette
+            isUsingController = InputManager.isPlayer2UsingController;
         }
     }
 
     void Update()
     {
-        // Si le menu est en pause, on ne traite pas les entrées
         if (pauseMenuManager.pauseMenuUI.activeSelf) return;
 
-        // Si le joueur utilise le clavier
         if (!isUsingController)
         {
             if (Input.GetKeyDown(shootKey))
             {
                 Shoot();
             }
-        }
-        // Si le joueur utilise la manette
-        else
-        {
-            if (Input.GetButtonDown("Fire" + PlayerId)) // "Fire1" ou "Fire2" selon le joueur
+        } else {
+            if (PlayerId == 1)
             {
-                Shoot();
+                if (Input.GetKeyDown(KeyCode.JoystickButton0))
+                {
+                    Shoot();
+                }
+            }
+            else if (PlayerId == 2)
+            {
+                if (Input.GetKeyDown(KeyCode.JoystickButton1))
+                {
+                    Shoot();
+                }
             }
         }
     }
 
     void Shoot()
     {
-        // Instancie le projectile au niveau de firePoint
         if (projectilePrefab != null && firePoint != null)
         {
             projectilePrefab.GetComponent<Projectile>().playerID = PlayerId;
