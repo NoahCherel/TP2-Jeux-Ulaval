@@ -18,6 +18,9 @@ public class Shooter : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        if (pauseMenuManager == null) {
+            pauseMenuManager = GameObject.Find("PauseManager").GetComponent<PauseMenuManager>();
+        }
 
         if (PlayerId == 1)
         {
