@@ -110,9 +110,9 @@ public class MultiEnemyAI : NetworkBehaviour
     void Attack(Transform player)
     {
         HealthMulti playerHealth = player.GetComponent<HealthMulti>();
-        if (playerHealth != null)
+        if (playerHealth != null && !playerHealth.isDead)
         {
-            playerHealth.TakeDamage(damage);
+            playerHealth.TakeDamageServerRpc(damage);
         }
     }
 }

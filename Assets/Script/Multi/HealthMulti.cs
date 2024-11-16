@@ -7,27 +7,80 @@ using TMPro;
 public class HealthMulti : NetworkBehaviour
 {
     public int maxHealth = 100;
-    public int currentHealth;
+    private NetworkVariable<int> currentHealth = new NetworkVariable<int>(100);
     public bool isDead = false;
-
     public TMP_Text healthText;
 
-    public void TakeDamage(int damage)
+    private void Start()
     {
-        if (IsServer)
+        // Disable the UI for remote players
+        if (!IsOwner)
         {
-            currentHealth -= damage;
+            healthText.gameObject.SetActive(false);
+        }
 
-            if (currentHealth <= 0)
-            {
-                currentHealth = 0;
-                isDead = true;
-            }
+        if (IsOwner)
+        {
+            UpdateHealthText(currentHealth.Value);
+        }
+
+        // Listen for health updates from the server
+        currentHealth.OnValueChanged += (prevValue, newValue) =>
+        {
+            UpdateHealthText(newValue);
+            CheckIfDead(newValue);
+        };
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsOwner && healthText != null)
+        {
+            UpdateHealthText(currentHealth.Value);
         }
     }
 
-    void Update()
+    // Method to take damage (can be called by other players or server)
+    [ServerRpc(RequireOwnership = false)]
+    public void TakeDamageServerRpc(int damage, ServerRpcParams serverRpcParams = default)
     {
-        healthText.text = "Health: " + currentHealth;
+        if (isDead) return;
+
+        currentHealth.Value -= damage;
+        currentHealth.Value = Mathf.Clamp(currentHealth.Value, 0, maxHealth);
+
+        CheckIfDead(currentHealth.Value);
+    }
+
+    // Heal the player (server-side control)
+    [ServerRpc(RequireOwnership = false)]
+    public void HealServerRpc(int healAmount, ServerRpcParams serverRpcParams = default)
+    {
+        if (isDead) return;
+
+        currentHealth.Value += healAmount;
+        currentHealth.Value = Mathf.Clamp(currentHealth.Value, 0, maxHealth);
+    }
+
+    private void CheckIfDead(int health)
+    {
+        if (health <= 0 && !isDead)
+        {
+            isDead = true;
+            HandleDeath();
+        }
+    }
+
+    private void HandleDeath()
+    {
+        Debug.Log($"Player {OwnerClientId} has died.");
+    }
+
+    private void UpdateHealthText(int health)
+    {
+        if (healthText != null)
+        {
+            healthText.text = $"Health: {health}";
+        }
     }
 }

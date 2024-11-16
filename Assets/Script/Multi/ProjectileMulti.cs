@@ -74,6 +74,12 @@ public class ProjectileMulti : NetworkBehaviour
             Destroy(other.gameObject);
             // Destroy the projectile
             Destroy(gameObject);
+
+            // Add score to each player
+            foreach (var score in FindObjectsOfType<ScoreMulti>())
+            {
+                score.AddScoreServerRpc(10);
+            }
         }
     }
 
