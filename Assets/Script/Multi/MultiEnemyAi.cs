@@ -15,17 +15,14 @@ public class MultiEnemyAI : NetworkBehaviour
 
     private float nextAttackTime = 0f;
 
-    private List<PlayerHealth> playerHealths = new List<PlayerHealth>();  // To store player health components
+    private List<FPSController> players = new List<FPSController>(); // To store player controllers
 
     void Start()
     {
-        if (!IsServer) return;  // Only run on server
+        if (!IsServer) return; // Only run on server
 
-        // Initialize the player health list
+        // Find all players and add them to the list
         FindAllPlayers();
-        {
-            Debug.Log("Waiting for more players to join...");
-        }
     }
 
     void Update()
@@ -38,12 +35,12 @@ public class MultiEnemyAI : NetworkBehaviour
         {
             float distanceToPlayer = Vector3.Distance(transform.position, targetPlayer.position);
 
-            // If the player is within detection range
+            // Move towards the player if within detection range
             if (distanceToPlayer <= detectionRange)
             {
                 MoveTowardsPlayer(targetPlayer);
 
-                // If the player is within attack range and cooldown is finished
+                // Attack the player if within attack range and cooldown is finished
                 if (distanceToPlayer <= attackRange && Time.time >= nextAttackTime)
                 {
                     Attack(targetPlayer);
@@ -53,36 +50,36 @@ public class MultiEnemyAI : NetworkBehaviour
         }
     }
 
-    // Finds all players currently in the game (with "Player" tag)
+    // Finds all players in the game
     void FindAllPlayers()
     {
         GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
 
         foreach (var playerObject in playerObjects)
         {
-            PlayerHealth playerHealth = playerObject.GetComponent<PlayerHealth>();
-            if (playerHealth != null && !playerHealth.isDead && !playerHealths.Contains(playerHealth))
+            FPSController fpsController = playerObject.GetComponent<FPSController>();
+            if (fpsController != null && !players.Contains(fpsController))
             {
-                playerHealths.Add(playerHealth);
+                players.Add(fpsController);
             }
         }
     }
 
-    // Finds the closest player who is not dead
+    // Finds the closest player
     Transform GetClosestPlayer()
     {
         Transform closestPlayer = null;
         float closestDistance = float.MaxValue;
 
-        foreach (var playerHealth in playerHealths)
+        foreach (var player in players)
         {
-            if (playerHealth != null && !playerHealth.isDead)
+            if (player != null) // Ensure player is valid
             {
-                float distanceToPlayer = Vector3.Distance(transform.position, playerHealth.transform.position);
+                float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
                 if (distanceToPlayer < closestDistance)
                 {
                     closestDistance = distanceToPlayer;
-                    closestPlayer = playerHealth.transform;
+                    closestPlayer = player.transform;
                 }
             }
         }
@@ -95,7 +92,7 @@ public class MultiEnemyAI : NetworkBehaviour
     {
         Vector3 direction = (player.position - transform.position).normalized;
 
-        // Avoid obstacles (simple logic here)
+        // Avoid obstacles
         RaycastHit hit;
         if (Physics.Raycast(transform.position, direction, out hit, 1f))
         {
@@ -105,15 +102,14 @@ public class MultiEnemyAI : NetworkBehaviour
             }
         }
 
-        // Move towards the player
         transform.position += direction * moveSpeed * Time.deltaTime;
         transform.LookAt(player);
     }
 
-    // Attack method (damage dealt to the player)
+    // Attack method
     void Attack(Transform player)
     {
-        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
+        HealthMulti playerHealth = player.GetComponent<HealthMulti>();
         if (playerHealth != null)
         {
             playerHealth.TakeDamage(damage);

@@ -137,7 +137,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -354, y: 225.25}
+  m_AnchoredPosition: {x: -370, y: 163}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4125374021369463860
@@ -363,7 +363,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -354, y: 275.25}
+  m_AnchoredPosition: {x: -370, y: 213}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5273455195850879451
@@ -475,9 +475,6 @@ GameObject:
   - component: {fileID: 4449178932074601880}
   - component: {fileID: 7757999800060168532}
   - component: {fileID: 2490586536876132117}
-  - component: {fileID: 5822941543905277151}
-  - component: {fileID: 26121991332680993}
-  - component: {fileID: 2819269284734547469}
   - component: {fileID: 3566639091160287590}
   m_Layer: 0
   m_Name: Capsule
@@ -577,49 +574,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5822941543905277151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7922044970562322541}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dd3f40a875c16848a5fcc53f05b4fe7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 4499151419449568886, guid: 12b23c9e54d4c544a90d56ceaa1756df, type: 3}
-  firePoint: {fileID: 9087484265954468907}
-  PlayerId: 1
-  pauseMenuManager: {fileID: 0}
---- !u!114 &26121991332680993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7922044970562322541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c09c7994189fad4496baf75978f3483, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
---- !u!114 &2819269284734547469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7922044970562322541}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a6d700b49ceb994c814807551ad5480, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 0
-  playerID: 1
 --- !u!114 &3566639091160287590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,6 +600,8 @@ GameObject:
   - component: {fileID: 5764505815232701833}
   - component: {fileID: 1477741897417188166}
   - component: {fileID: 7542655580540110253}
+  - component: {fileID: 5885779773920201303}
+  - component: {fileID: 1825371734206087100}
   m_Layer: 0
   m_Name: PlayerMulti
   m_TagString: Player
@@ -737,3 +693,33 @@ MonoBehaviour:
   lookSpeed: 2
   lookXLimit: 45
   canMove: 1
+--- !u!114 &5885779773920201303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8605954763381939707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 035db86aa61623a4fb13afb22b6ef3ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  score: 0
+  scoreText: {fileID: 3178871845242444103}
+--- !u!114 &1825371734206087100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8605954763381939707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 750a247a5a2affd48aa93f12cb5426e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+  isDead: 0
+  healthText: {fileID: 4996964935007287402}

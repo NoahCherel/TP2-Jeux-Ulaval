@@ -14,10 +14,14 @@ public class ChooseRoleMulti : MonoBehaviour
         HostButton.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartHost();
+            HostButton.gameObject.SetActive(false);
+            clientButton.gameObject.SetActive(false);
         });
         clientButton.onClick.AddListener(() =>
         {
             NetworkManager.Singleton.StartClient();
+            HostButton.gameObject.SetActive(false);
+            clientButton.gameObject.SetActive(false);
         });
     }
 }
