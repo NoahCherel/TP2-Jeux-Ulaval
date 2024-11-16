@@ -137,7 +137,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -390.25, y: 225.25}
+  m_AnchoredPosition: {x: -354, y: 225.25}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4125374021369463860
@@ -363,7 +363,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -390.25, y: 275.25}
+  m_AnchoredPosition: {x: -354, y: 275.25}
   m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5273455195850879451
@@ -478,6 +478,7 @@ GameObject:
   - component: {fileID: 5822941543905277151}
   - component: {fileID: 26121991332680993}
   - component: {fileID: 2819269284734547469}
+  - component: {fileID: 3566639091160287590}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Player
@@ -583,12 +584,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7922044970562322541}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dd3f40a875c16848a5fcc53f05b4fe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 4499151419449568886, guid: 65ad83aa4b723674aa96dc2394db0a75, type: 3}
+  projectilePrefab: {fileID: 4499151419449568886, guid: 12b23c9e54d4c544a90d56ceaa1756df, type: 3}
   firePoint: {fileID: 9087484265954468907}
   PlayerId: 1
   pauseMenuManager: {fileID: 0}
@@ -619,6 +620,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: 0
   playerID: 1
+--- !u!114 &3566639091160287590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7922044970562322541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 564aef3e1b3d67a45bcb38919ff15c43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 4499151419449568886, guid: 12b23c9e54d4c544a90d56ceaa1756df, type: 3}
+  bulletSpawnPoint: {fileID: 9087484265954468907}
 --- !u!1 &8605954763381939707
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,7 +662,7 @@ Transform:
   m_GameObject: {fileID: 8605954763381939707}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.7740467, y: -4.8813095, z: -3.2331}
+  m_LocalPosition: {x: 0, y: 1.18, z: -3.2331}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -671,7 +686,7 @@ MonoBehaviour:
   GlobalObjectIdHash: 4139171725
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
+  SynchronizeTransform: 0
   ActiveSceneSynchronization: 0
   SceneMigrationSynchronization: 1
   SpawnWithObservers: 1
@@ -718,7 +733,6 @@ MonoBehaviour:
   playerCamera: {fileID: 1578576294763557914}
   walkSpeed: 6
   runSpeed: 12
-  jumpPower: 7
   gravity: 10
   lookSpeed: 2
   lookXLimit: 45

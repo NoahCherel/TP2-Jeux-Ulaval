@@ -23,9 +23,6 @@ public class MultiEnemyAI : NetworkBehaviour
 
         // Initialize the player health list
         FindAllPlayers();
-
-        // Wait until at least 2 players are in the game
-        if (playerHealths.Count < 2)
         {
             Debug.Log("Waiting for more players to join...");
         }
@@ -34,12 +31,6 @@ public class MultiEnemyAI : NetworkBehaviour
     void Update()
     {
         if (!IsServer) return; // Only run on server
-
-        // Ensure we wait until at least 2 players are connected
-        if (playerHealths.Count < 2)
-        {
-            return; // Do nothing if there are not enough players
-        }
 
         Transform targetPlayer = GetClosestPlayer();
 

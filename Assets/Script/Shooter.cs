@@ -10,9 +10,7 @@ public class Shooter : MonoBehaviour
     public int PlayerId;
     private KeyCode shootKey;
     public PauseMenuManager pauseMenuManager;
-
     private bool isUsingController;
-
     CharacterController characterController;
 
     void Start()
