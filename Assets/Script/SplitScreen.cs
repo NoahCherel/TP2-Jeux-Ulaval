@@ -32,6 +32,8 @@ public class SplitScreenController : MonoBehaviour
     private CharacterController player2Controller;
 
     public PauseMenuManager pauseMenuManager;
+    public EndGameManager endGameManager;
+
 
 
     void Start()
@@ -63,9 +65,19 @@ public class SplitScreenController : MonoBehaviour
 
         if (!player2Health.isDead) HandlePlayerMovement(player2, player2Controller, 2);
 
+        if (player1Health.isDead && player2Health.isDead)
+        {
+            endGame();
+        }
+
         UpdateHealthUI();
         UpdateScoreUI();
         UpdateWaveNumberUI();
+    }
+
+    void endGame()
+    {
+        endGameManager.ShowEndMenu();
     }
 
     void HandlePlayerMovement(GameObject player, CharacterController characterController, int playerNumber)
