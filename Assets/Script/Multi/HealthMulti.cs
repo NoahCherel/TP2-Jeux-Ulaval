@@ -62,15 +62,6 @@ public class HealthMulti : NetworkBehaviour
         currentHealth.Value = Mathf.Clamp(currentHealth.Value, 0, maxHealth);
     }
 
-    private void CheckIfDead(int health)
-    {
-        if (health <= 0 && !isDead)
-        {
-            isDead = true;
-            HandleDeath();
-        }
-    }
-
     private void HandleDeath()
     {
         Debug.Log($"Player {OwnerClientId} has died.");
@@ -81,6 +72,40 @@ public class HealthMulti : NetworkBehaviour
         if (healthText != null)
         {
             healthText.text = $"Health: {health}";
+        }
+    }
+
+    private void CheckIfDead(int health)
+    {
+        if (health <= 0 && !isDead)
+        {
+            isDead = true;
+            HandleDeath();
+
+            // Signaler la mort au serveur, même côté client
+            if (IsOwner)
+            {
+                if (IsServer)
+                {
+                    // Si nous sommes le serveur, nous mettons à jour l'état de mort du joueur
+                    GameObject.FindObjectOfType<GameManagerMulti>()?.UpdatePlayerStateServerRpc(OwnerClientId, true);
+                }
+                else
+                {
+                    // Côté client : on appelle un ServerRpc pour signaler la mort
+                    UpdatePlayerStateServerRpc(OwnerClientId, true);
+                }
+            }
+        }
+    }
+
+    // Côté client : ce ServerRpc met à jour l'état de mort du joueur au serveur
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdatePlayerStateServerRpc(ulong playerId, bool isDead)
+    {
+        if (IsServer)
+        {
+            GameObject.FindObjectOfType<GameManagerMulti>()?.UpdatePlayerStateServerRpc(playerId, isDead);
         }
     }
 }

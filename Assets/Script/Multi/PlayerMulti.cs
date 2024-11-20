@@ -25,6 +25,8 @@ public class FPSController : NetworkBehaviour
 
     private CharacterController characterController;
 
+    public HealthMulti healthMulti;
+
     // NetworkVariables to sync position and rotation
     private NetworkVariable<Vector3> syncedPosition = new NetworkVariable<Vector3>(
         writePerm: NetworkVariableWritePermission.Owner); // Owner updates, others read.
@@ -57,6 +59,7 @@ public class FPSController : NetworkBehaviour
 
     private void HandleMovement()
     {
+        if (healthMulti.isDead) return;
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
@@ -81,13 +84,11 @@ public class FPSController : NetworkBehaviour
 
     private void HandleRotation()
     {
-        if (canMove)
-        {
-            rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-            rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-            playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
-            transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
-        }
+        if (healthMulti.isDead) return;
+        rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+        rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+        playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+        transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
     }
 
     public override void OnNetworkSpawn()

@@ -693,6 +693,7 @@ MonoBehaviour:
   lookSpeed: 2
   lookXLimit: 45
   canMove: 1
+  healthMulti: {fileID: 1825371734206087100}
 --- !u!114 &5885779773920201303
 MonoBehaviour:
   m_ObjectHideFlags: 0
