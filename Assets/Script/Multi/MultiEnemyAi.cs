@@ -65,7 +65,7 @@ public class MultiEnemyAI : NetworkBehaviour
         }
     }
 
-    // Finds the closest player
+    // Finds the closest player, excluding dead players
     Transform GetClosestPlayer()
     {
         Transform closestPlayer = null;
@@ -75,11 +75,16 @@ public class MultiEnemyAI : NetworkBehaviour
         {
             if (player != null) // Ensure player is valid
             {
-                float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-                if (distanceToPlayer < closestDistance)
+                // Check if the player is alive
+                HealthMulti playerHealth = player.GetComponent<HealthMulti>();
+                if (playerHealth != null && !playerHealth.isDead)
                 {
-                    closestDistance = distanceToPlayer;
-                    closestPlayer = player.transform;
+                    float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+                    if (distanceToPlayer < closestDistance)
+                    {
+                        closestDistance = distanceToPlayer;
+                        closestPlayer = player.transform;
+                    }
                 }
             }
         }
