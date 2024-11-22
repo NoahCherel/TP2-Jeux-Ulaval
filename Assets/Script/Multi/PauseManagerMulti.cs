@@ -2,7 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using Unity.Netcode; // Ajouter pour utiliser NetworkManager
+using Unity.Netcode;
 
 public class PauseMenuManagerMulti : MonoBehaviour
 {

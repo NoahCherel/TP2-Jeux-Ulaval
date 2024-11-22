@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Netcode;
 
 public class EndGameManagerMulti : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class EndGameManagerMulti : MonoBehaviour
 
     public void QuitGame()
     {
+        if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsClient)
+        {
+            Debug.Log("Déconnexion du serveur...");
+            NetworkManager.Singleton.Shutdown();
+        }
         Debug.Log("QuitGame");
         SceneManager.LoadScene("MainMenu");
     }
