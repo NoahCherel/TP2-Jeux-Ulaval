@@ -1,59 +1,66 @@
 using UnityEngine;
-using TMPro; // Ajouter TextMesh Pro namespace
-using UnityEngine.UI; // Ajouter pour Button d'Unity
-using UnityEngine.SceneManagement; // Ajouter pour la gestion des scènes
+using TMPro;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using Unity.Netcode; // Ajouter pour utiliser NetworkManager
 
-public class PauseManagerMulti : MonoBehaviour
+public class PauseMenuManagerMulti : MonoBehaviour
 {
-    public GameObject pauseMenuUI;  // Menu de pause
-    public Button resumeButton;     // Bouton pour reprendre
-    public Button quitButton;       // Bouton pour quitter
-
+    public GameObject pauseMenuUI;
+    public Button resumeButton;
+    public Button quitButton;
     private void Start()
     {
-        // Initialisation du menu de pause
-        pauseMenuUI.SetActive(false);  // Le menu est initialement caché
+        pauseMenuUI.SetActive(false);
+        Time.timeScale = 1f;
 
-        // Lier les boutons aux actions
         resumeButton.onClick.AddListener(ResumeGame);
         quitButton.onClick.AddListener(QuitGame);
+
     }
 
     private void Update()
     {
-        // Permet de montrer/masquer le menu de pause lorsqu'on appuie sur la touche "Échap"
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (pauseMenuUI.activeSelf)
             {
-                ResumeGame(); // Si le menu est déjà affiché, on le cache
+                ResumeGame();
             }
             else
             {
-                ShowPauseMenu(); // Sinon, on l'affiche
+                ShowPauseMenu();
             }
         }
     }
 
-    // Affiche le menu de pause
     public void ShowPauseMenu()
     {
-        pauseMenuUI.SetActive(true);
-        Cursor.visible = true;
+        //Unlock cursor
         Cursor.lockState = CursorLockMode.None;
+        pauseMenuUI.SetActive(true);
+        Time.timeScale = 0f;
     }
 
-    // Reprendre la partie, on cache simplement le menu sans toucher à Time.timeScale
     public void ResumeGame()
     {
         Debug.Log("ResumeGame");
         pauseMenuUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1f;
     }
 
-    // Quitter le jeu et revenir au menu principal
     public void QuitGame()
     {
         Debug.Log("QuitGame");
+        // Si le joueur est connecté à un serveur ou un hôte
+        if (NetworkManager.Singleton.IsServer || NetworkManager.Singleton.IsClient)
+        {
+            Debug.Log("Déconnexion du serveur...");
+            NetworkManager.Singleton.Shutdown();
+        }
+
+        // Charger le menu principal
         SceneManager.LoadScene("MainMenu");
     }
 }

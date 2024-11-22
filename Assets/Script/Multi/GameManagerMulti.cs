@@ -17,6 +17,25 @@ public class GameManagerMulti : NetworkBehaviour
             NetworkManager.Singleton.OnClientConnectedCallback += OnPlayerConnected;
             NetworkManager.Singleton.OnClientDisconnectCallback += OnPlayerDisconnected;
         }
+
+        if (IsClient)
+        {
+            // Quit le jeu si le joueur est déconnecté
+            NetworkManager.Singleton.OnClientDisconnectCallback += (clientId) =>
+            {
+                if (clientId == NetworkManager.Singleton.LocalClientId)
+                {
+                    Debug.Log("Vous avez été déconnecté du serveur.");
+                    NetworkManager.Singleton.Shutdown();
+
+                    // Unlock cursor
+                    Cursor.lockState = CursorLockMode.None;
+
+                    // Retour au menu principal
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+                }
+            };
+        }
     }
 
     private void OnPlayerConnected(ulong clientId)
