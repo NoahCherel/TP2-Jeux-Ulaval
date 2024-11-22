@@ -36,7 +36,7 @@ public class PauseMenuManagerMulti : MonoBehaviour
 
     public void ShowPauseMenu()
     {
-        //Unlock cursor
+        Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
