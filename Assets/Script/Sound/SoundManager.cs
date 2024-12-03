@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
     public static SoundManager instance;	
     public Sound[] musicSounds, sfxSounds, FoleySounds;
     public AudioSource musicSource, sfxSource, foleySource;
+    public static event Action<float> OnFoleyVolumeChanged;
 
     private void Awake()
     {
@@ -79,5 +80,6 @@ public class SoundManager : MonoBehaviour
     public void FoleyVolume(float volume)
     {
         foleySource.volume = volume;
+        OnFoleyVolumeChanged?.Invoke(volume);
     }
 }
