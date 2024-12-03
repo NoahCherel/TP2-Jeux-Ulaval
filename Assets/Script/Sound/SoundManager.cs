@@ -1,34 +1,20 @@
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
+using System.Collections.Generic;
+using System;
 
 public class SoundManager : MonoBehaviour
 {
-    public static SoundManager instance; // Singleton pour y accéder facilement
-    private AudioSource musicSource; // Source pour la musique
-    private AudioSource sfxSource;   // Source pour les effets sonores
-
-    public AudioClip FirstClickSound;
-    public AudioClip nextSound;
-    public AudioClip backSound;
-    public AudioClip EnemyWalkSound;
-
-    // Musique à jouer au démarrage
-    public AudioClip startMusicClip; // Musique de démarrage, à assigner dans l'inspecteur
-    public AudioClip scene1Music;    // Musique pour la scène 1
-
-    [Range(0f, 1f)] public float musicVolume = 1f;  // Volume de la musique
-    [Range(0f, 1f)] public float sfxVolume = 1f;     // Volume des effets sonores
-
-    public Slider musicSlider;   // Slider pour le volume de la musique
-    public Slider sfxSlider;     // Slider pour le volume des effets sonores
+    public static SoundManager instance;	
+    public Sound[] musicSounds, sfxSounds, FoleySounds;
+    public AudioSource musicSource, sfxSource, foleySource;
 
     private void Awake()
     {
-        // Vérifie s'il existe déjà une instance, sinon l'initialise
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Garde le SoundManager entre les scènes
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -36,61 +22,62 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    void Start()
+    private void Start()
     {
-        // Assigner les sources audio
-        musicSource = GetComponent<AudioSource>(); 
-        sfxSource = gameObject.AddComponent<AudioSource>(); 
+        PlayMusic("MainMenu");
+    }
 
-        // Applique les volumes par défaut
-        musicSource.volume = musicVolume;
-        sfxSource.volume = sfxVolume;
-
-        // Initialise les sliders avec les valeurs actuelles
-        musicSlider.value = musicVolume;
-        sfxSlider.value = sfxVolume;
-
-        // Ajoute les listeners pour changer les volumes en temps réel
-        musicSlider.onValueChanged.AddListener(SetMusicVolume);
-        sfxSlider.onValueChanged.AddListener(SetSFXVolume);
-
-        // Jouer la musique de démarrage si elle est assignée
-        if (startMusicClip != null)
+    public void PlayMusic(string soundName)
+    {
+        Sound sound = Array.Find(musicSounds, s => s.soundName == soundName);
+        if (sound == null)
         {
-            PlayMusic(startMusicClip);
+            Debug.LogWarning("Sound: " + soundName + " not found!");
+            return;
         }
+        musicSource.clip = sound.clip;
+        musicSource.Play();
     }
 
-    // Fonction pour jouer un son (effet sonore)
-    public void PlaySound(AudioClip clip)
+    public void PlaySFX(string soundName)
     {
-        sfxSource.PlayOneShot(clip); // Joue un son sans interrompre ceux en cours
-    }
-
-    // Fonction pour jouer la musique
-    public void PlayMusic(AudioClip musicClip)
-    {
-        if (musicSource.isPlaying) 
+        Sound sound = Array.Find(sfxSounds, s => s.soundName == soundName);
+        if (sound == null)
         {
-            musicSource.Stop(); // Si une musique est déjà en train de jouer, on la stoppe avant de commencer une nouvelle
+            Debug.LogWarning("Sound: " + soundName + " not found!");
+            return;
         }
-
-        musicSource.clip = musicClip;   // Définir le clip de musique à jouer
-        musicSource.Play();             // Lancer la musique
-        musicSource.volume = musicVolume; // Appliquer le volume de la musique
+        sfxSource.PlayOneShot(sound.clip);
     }
 
-    // Fonction pour ajuster le volume de la musique
-    public void SetMusicVolume(float volume)
+    public void PlayFoley(string soundName)
     {
-        musicVolume = volume;
-        musicSource.volume = musicVolume; // Modifie le volume de la musique
+        Sound sound = Array.Find(FoleySounds, s => s.soundName == soundName);
+        if (sound == null)
+        {
+            Debug.LogWarning("Sound: " + soundName + " not found!");
+            return;
+        }
+        foleySource.PlayOneShot(sound.clip);
     }
 
-    // Fonction pour ajuster le volume des effets sonores
-    public void SetSFXVolume(float volume)
+    public void StopMusic()
     {
-        sfxVolume = volume;
-        sfxSource.volume = sfxVolume; // Modifie le volume des effets sonores
+        musicSource.Stop();
+    }
+
+    public void MusicVolume(float volume)
+    {
+        musicSource.volume = volume;
+    }
+
+    public void SFXVolume(float volume)
+    {
+        sfxSource.volume = volume;
+    }
+
+    public void FoleyVolume(float volume)
+    {
+        foleySource.volume = volume;
     }
 }

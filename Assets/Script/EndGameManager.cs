@@ -26,6 +26,7 @@ public class EndGameManager : MonoBehaviour
     public void QuitGame()
     {
         Debug.Log("QuitGame");
+        SoundManager.instance.PlayMusic("MainMenu");
         SceneManager.LoadScene("MainMenu");  // Charge la scène "MainMenu", ou une autre scène que vous souhaitez
     }
 }

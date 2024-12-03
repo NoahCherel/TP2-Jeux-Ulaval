@@ -49,6 +49,7 @@ public class PauseMenuManager : MonoBehaviour
     public void QuitGame()
     {
         Debug.Log("QuitGame");
+        SoundManager.instance.PlayMusic("MainMenu");
         SceneManager.LoadScene("MainMenu");
     }
 }
