@@ -342,6 +342,7 @@ GameObject:
   - component: {fileID: 136041691}
   - component: {fileID: 136041690}
   - component: {fileID: 136041693}
+  - component: {fileID: 136041694}
   m_Layer: 5
   m_Name: OptionMenu
   m_TagString: Untagged
@@ -461,6 +462,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3e8f904062227a4daf0ef47bd5563a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSpatialSound: 0
+--- !u!114 &136041694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 136041688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e607dcb9b5b2964c8242267e243359c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Button: {fileID: 136041690}

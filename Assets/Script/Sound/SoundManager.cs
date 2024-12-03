@@ -7,7 +7,7 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance;	
     public Sound[] musicSounds, sfxSounds, FoleySounds;
-    public AudioSource musicSource, sfxSource, foleySource;
+    public AudioSource musicSource, sfxSource, foleySource, musicSpacialSource, sfxSpacialSource, foleySpacialSource;
     public static event Action<float> OnFoleyVolumeChanged;
 
     private void Awake()
@@ -25,7 +25,7 @@ public class SoundManager : MonoBehaviour
 
     private void Start()
     {
-        PlayMusic("MainMenu");
+        PlaySpacialMusic("MainMenu");
     }
 
     public void PlayMusic(string soundName)
@@ -62,6 +62,40 @@ public class SoundManager : MonoBehaviour
         foleySource.PlayOneShot(sound.clip);
     }
 
+    public void PlaySpacialMusic(string soundName)
+    {
+        Sound sound = Array.Find(musicSounds, s => s.soundName == soundName);
+        if (sound == null)
+        {
+            Debug.LogWarning("Sound: " + soundName + " not found!");
+            return;
+        }
+        musicSpacialSource.clip = sound.clip;
+        musicSpacialSource.Play();
+    }
+
+    public void PlaySpacialSFX(string soundName)
+    {
+        Sound sound = Array.Find(sfxSounds, s => s.soundName == soundName);
+        if (sound == null)
+        {
+            Debug.LogWarning("Sound: " + soundName + " not found!");
+            return;
+        }
+        sfxSpacialSource.PlayOneShot(sound.clip);
+    }
+
+    public void PlaySpacialFoley(string soundName)
+    {
+        Sound sound = Array.Find(FoleySounds, s => s.soundName == soundName);
+        if (sound == null)
+        {
+            Debug.LogWarning("Sound: " + soundName + " not found!");
+            return;
+        }
+        foleySpacialSource.PlayOneShot(sound.clip);
+    }
+
     public void StopMusic()
     {
         musicSource.Stop();
@@ -70,16 +104,19 @@ public class SoundManager : MonoBehaviour
     public void MusicVolume(float volume)
     {
         musicSource.volume = volume;
+        musicSpacialSource.volume = volume;
     }
 
     public void SFXVolume(float volume)
     {
         sfxSource.volume = volume;
+        sfxSpacialSource.volume = volume;
     }
 
     public void FoleyVolume(float volume)
     {
         foleySource.volume = volume;
+        foleySpacialSource.volume = volume;
         OnFoleyVolumeChanged?.Invoke(volume);
     }
 }

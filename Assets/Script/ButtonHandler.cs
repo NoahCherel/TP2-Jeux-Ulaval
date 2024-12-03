@@ -1,10 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Pour interagir avec le bouton
+using UnityEngine.UI;
 
 public class ButtonHandler : MonoBehaviour
 {
     [SerializeField] private Button Button;
-
     private void Start()
     {
         if (Button != null)
@@ -28,30 +29,6 @@ public class ButtonHandler : MonoBehaviour
         else
         {
             Debug.LogError("GameManager is not loaded yet!");
-        }
-    }
-
-    public void OnButtonClickPlaySFX(string soundName)
-    {
-        if (SoundManager.instance != null && !string.IsNullOrEmpty(soundName))
-        {
-            SoundManager.instance.PlaySFX(soundName);
-        }
-    }
-
-    public void OnButtonClickPlayMusic(string soundName)
-    {
-        if (SoundManager.instance != null && !string.IsNullOrEmpty(soundName))
-        {
-            SoundManager.instance.PlayMusic(soundName);
-        }
-    }
-
-    public void OnButtonClickPlayFoley(string soundName)
-    {
-        if (SoundManager.instance != null && !string.IsNullOrEmpty(soundName))
-        {
-            SoundManager.instance.PlayFoley(soundName);
         }
     }
 }
