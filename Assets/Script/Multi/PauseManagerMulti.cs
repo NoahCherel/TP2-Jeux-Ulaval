@@ -59,7 +59,7 @@ public class PauseMenuManagerMulti : MonoBehaviour
             Debug.Log("Déconnexion du serveur...");
             NetworkManager.Singleton.Shutdown();
         }
-
+        Time.timeScale = 1f;
         // Charger le menu principal
         SceneManager.LoadScene("MainMenu");
     }

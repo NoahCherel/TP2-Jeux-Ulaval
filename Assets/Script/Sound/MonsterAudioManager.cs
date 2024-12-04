@@ -27,6 +27,9 @@ public class MonsterAudioManager : MonoBehaviour
     {
         // S'abonner à l'événement pour synchroniser le volume Foley
         SoundManager.OnFoleyVolumeChanged += UpdateFoleyVolume;
+
+        // Appliquer le volume actuel des sons Foley dès le démarrage
+        UpdateFoleyVolume(SoundManager.instance.foleySource.volume);
     }
 
     private void OnDisable()
@@ -45,5 +48,6 @@ public class MonsterAudioManager : MonoBehaviour
     public void SetFoleySound(AudioClip clip)
     {
         audioSource.clip = clip;
+        audioSource.Play();  // Jouer le nouveau clip
     }
 }

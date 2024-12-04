@@ -22,11 +22,14 @@ public class GameLoader : MonoBehaviour
 
         if (indexScene == 0)
         {
-            SoundManager.instance.PlayMusic("MainMenu");
+            SoundManager.instance.StopMusic("Game");
+            SoundManager.instance.PlaySpacialMusic("MainMenu");
         }
         else if (indexScene == 1)
         {
+            SoundManager.instance.StopSpacialMusic("MainMenu");
             SoundManager.instance.PlayMusic("Game");
+            SoundManager.instance.PlayRandomFoley();
         }
 
         LoadingScreen.SetActive(true);

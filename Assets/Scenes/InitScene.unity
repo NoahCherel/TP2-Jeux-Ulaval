@@ -174,6 +174,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: a6a1c8d53e4056e46901132a7df8c4f7, type: 3}
   - soundName: MainMenu
     clip: {fileID: 8300000, guid: 543ddad05b66bac4e9c31cdfa19b0004, type: 3}
+  - soundName: GameOver
+    clip: {fileID: 8300000, guid: 6aad3110167535b4097228aa8067bb80, type: 3}
   sfxSounds:
   - soundName: Back
     clip: {fileID: 8300000, guid: 1feba84fb5a4bbc42940be5824a9029d, type: 3}
@@ -186,6 +188,14 @@ MonoBehaviour:
   FoleySounds:
   - soundName: EnemyWalk
     clip: {fileID: 8300000, guid: ebafbe17b5316154b8af61aadb8dd954, type: 3}
+  - soundName: PasBienvenue
+    clip: {fileID: 8300000, guid: 080c1c21003ec664c8452e1bb6384212, type: 3}
+  - soundName: Chasse
+    clip: {fileID: 8300000, guid: ed82efc6b99d3d941901cf6bb86e9b0c, type: 3}
+  - soundName: Bingo
+    clip: {fileID: 8300000, guid: e5c73bc17c2eb0d42a028886b7890e6f, type: 3}
+  - soundName: Jackpot
+    clip: {fileID: 8300000, guid: 320b8e38a3851fc43a82b5242e161250, type: 3}
   musicSource: {fileID: 330080035}
   sfxSource: {fileID: 1534632747}
   foleySource: {fileID: 1765621079}
@@ -205,6 +215,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1411160019}
   - {fileID: 1338159835}
   - {fileID: 330080036}
   - {fileID: 1560558881}
@@ -773,6 +784,56 @@ MonoBehaviour:
   verticalAmplitude: 2
   verticalSpeed: 1
   clockwise: 1
+--- !u!1 &1411160018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1411160019}
+  - component: {fileID: 1411160020}
+  m_Layer: 0
+  m_Name: FoleySound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1411160019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411160018}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 734.73883, y: 368.387, z: -1186.628}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 81442559}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1411160020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411160018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd6904f7c48968a479344448ff0dfa95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FoleySounds:
+  - soundName: Chasse
+    clip: {fileID: 8300000, guid: ed82efc6b99d3d941901cf6bb86e9b0c, type: 3}
+  - soundName: PasBienvenue
+    clip: {fileID: 8300000, guid: 080c1c21003ec664c8452e1bb6384212, type: 3}
+  foleySource: {fileID: 1765621079}
 --- !u!1 &1534632746
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,7 +1140,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -3725,7 +3786,7 @@ Transform:
   m_GameObject: {fileID: 1552183293284278731}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -65, y: 0, z: 0}
+  m_LocalPosition: {x: -65, y: -50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4786,8 +4847,8 @@ Transform:
   m_GameObject: {fileID: 4448918540171099222}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -300, y: 250, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2684207802272743202}
@@ -5271,7 +5332,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -162.4, y: -170}
+  m_AnchoredPosition: {x: -162.4, y: -125}
   m_SizeDelta: {x: 95.3939, y: 20.5972}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5418205815033015644
@@ -7307,10 +7368,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.4
+  m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1

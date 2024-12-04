@@ -49,7 +49,9 @@ public class PauseMenuManager : MonoBehaviour
     public void QuitGame()
     {
         Debug.Log("QuitGame");
-        SoundManager.instance.PlayMusic("MainMenu");
+        Time.timeScale = 1f;
+        SoundManager.instance.StopMusic("Game");
+        SoundManager.instance.PlaySpacialMusic("MainMenu");
         SceneManager.LoadScene("MainMenu");
     }
 }
