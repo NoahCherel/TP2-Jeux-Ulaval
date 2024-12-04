@@ -1,10 +1,11 @@
 using UnityEngine;
-using System;
 
 public class FoleySoundManager : MonoBehaviour
 {
     public static FoleySoundManager instance;
-    public Sound[] FoleySounds; // Liste des sons de Foley
+    public Sound[] Emote;
+    public Sound[] StartGame;
+    public Sound[] CompleteWave;
     public AudioSource foleySource; // Source audio pour jouer les sons Foley
 
     private void Awake()
@@ -21,28 +22,40 @@ public class FoleySoundManager : MonoBehaviour
     }
 
     // Méthode pour jouer un son de Foley aléatoire
-    public void PlayRandomFoley()
+    public void PlayRandomFoley(Sound[] customFoleySounds)
     {
-        if (FoleySounds.Length == 0)
+        // Vérifier si la liste fournie est valide
+        if (customFoleySounds == null || customFoleySounds.Length == 0)
         {
             Debug.LogWarning("No Foley sounds available to play!");
             return;
         }
 
-        // Choisir un indice aléatoire parmi les sons Foley
-        int randomIndex = UnityEngine.Random.Range(0, FoleySounds.Length);
+        // Choisir un indice aléatoire parmi les sons disponibles
+        int randomIndex = UnityEngine.Random.Range(0, customFoleySounds.Length);
 
         // Récupérer le son aléatoire basé sur l'indice
-        Sound randomSound = FoleySounds[randomIndex];
+        Sound randomSound = customFoleySounds[randomIndex];
 
-        if (randomSound != null)
+        if (randomSound != null && randomSound.clip != null)
         {
             // Jouer le son
             foleySource.PlayOneShot(randomSound.clip);
         }
         else
         {
-            Debug.LogWarning("Foley sound is null at index: " + randomIndex);
+            Debug.LogWarning("Foley sound or clip is null at index: " + randomIndex);
         }
+    }
+
+    // Méthodes spécifiques pour jouer des sons à partir des listes Emote et StartGame
+    public void PlayRandomEmote()
+    {
+        PlayRandomFoley(Emote);
+    }
+
+    public void PlayRandomStartGame()
+    {
+        PlayRandomFoley(StartGame);
     }
 }

@@ -17,6 +17,7 @@ public class EndGameManager : MonoBehaviour
     // Appelée quand la partie se termine
     public void ShowEndMenu()
     {
+        Time.timeScale = 0f;         // Arrête le temps
         endMenuUI.SetActive(true);   // Affiche l'UI de fin de jeu
         Cursor.visible = true;      // Rend le curseur visible
         Cursor.lockState = CursorLockMode.None; // Déverrouille le curseur
@@ -27,7 +28,7 @@ public class EndGameManager : MonoBehaviour
     {
         Debug.Log("QuitGame");
         SoundManager.instance.PlaySpacialMusic("MainMenu");
-        SoundManager.instance.StopMusic("Gameplay");
+        // SoundManager.instance.StopMusic("GameOver");
         SceneManager.LoadScene("MainMenu");  // Charge la scène "MainMenu", ou une autre scène que vous souhaitez
     }
 }

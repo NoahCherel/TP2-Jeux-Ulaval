@@ -67,12 +67,19 @@ public class SplitScreenController : MonoBehaviour
 
         if (player1Health.isDead && player2Health.isDead)
         {
+            SoundManager.instance.StopMusic("Game");
+            SoundManager.instance.PlayMusic("GameOver");
             endGame();
         }
 
         UpdateHealthUI();
         UpdateScoreUI();
         UpdateWaveNumberUI();
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            SoundManager.instance.PlayRandomFoley(FoleySoundManager.instance.Emote);
+        }
     }
 
     void endGame()

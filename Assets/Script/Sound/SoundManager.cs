@@ -26,20 +26,10 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     private void Start()
     {
         PlaySpacialMusic("MainMenu");
-        // Charger les volumes sauvegardés au démarrage
         LoadVolumeSettings();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            PlayRandomFoley();
-        }
     }
 
     // Sauvegarder les réglages de volume
@@ -193,8 +183,20 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlayRandomFoley()
+    public void ChangeMusic(string soundName)
     {
-        FoleySoundManager.instance.PlayRandomFoley();
+        Sound sound = Array.Find(musicSounds, s => s.soundName == soundName);
+        if (sound == null)
+        {
+            Debug.LogWarning("Sound: " + soundName + " not found!");
+            return;
+        }
+        musicSource.clip = sound.clip;
+        musicSource.Play();
+    }
+
+    public void PlayRandomFoley(Sound[] customFoleySounds)
+    {
+        FoleySoundManager.instance.PlayRandomFoley(customFoleySounds);
     }
 }

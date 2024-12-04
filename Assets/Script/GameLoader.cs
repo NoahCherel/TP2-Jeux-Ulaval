@@ -20,16 +20,16 @@ public class GameLoader : MonoBehaviour
         AsyncOperation operation = SceneManager.LoadSceneAsync(indexScene);
         Debug.Log("Loading Scene: " + indexScene);
 
-        if (indexScene == 0)
+        if (indexScene == 1)
         {
             SoundManager.instance.StopMusic("Game");
             SoundManager.instance.PlaySpacialMusic("MainMenu");
         }
-        else if (indexScene == 1)
+        else if (indexScene == 2)
         {
             SoundManager.instance.StopSpacialMusic("MainMenu");
             SoundManager.instance.PlayMusic("Game");
-            SoundManager.instance.PlayRandomFoley();
+            SoundManager.instance.PlayRandomFoley(FoleySoundManager.instance.StartGame);
         }
 
         LoadingScreen.SetActive(true);

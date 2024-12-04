@@ -31,6 +31,10 @@ public class WaveManager : MonoBehaviour
             // Prepare for the next wave
             currentWave++;
             int enemiesToSpawn = initialEnemiesPerWave + (currentWave - 1) * enemyIncreasePerWave;
+            if (currentWave != 1)
+            {
+                SoundManager.instance.PlayRandomFoley(FoleySoundManager.instance.CompleteWave);
+            }
 
             for (int i = 0; i < enemiesToSpawn; i++)
             {

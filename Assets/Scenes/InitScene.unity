@@ -187,7 +187,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 45b2bc991a6538046a4d2825125a2df7, type: 3}
   FoleySounds:
   - soundName: EnemyWalk
-    clip: {fileID: 8300000, guid: ebafbe17b5316154b8af61aadb8dd954, type: 3}
+    clip: {fileID: 8300000, guid: 32bb371e2a460bc4584b317cc24ac3c1, type: 3}
   - soundName: PasBienvenue
     clip: {fileID: 8300000, guid: 080c1c21003ec664c8452e1bb6384212, type: 3}
   - soundName: Chasse
@@ -828,11 +828,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd6904f7c48968a479344448ff0dfa95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FoleySounds:
+  Emote:
   - soundName: Chasse
     clip: {fileID: 8300000, guid: ed82efc6b99d3d941901cf6bb86e9b0c, type: 3}
+  - soundName: Salutation
+    clip: {fileID: 8300000, guid: 540564ebff4d6424ca29891bb2965e16, type: 3}
+  StartGame:
+  - soundName: HeureuxDeRencontrer
+    clip: {fileID: 8300000, guid: 5d7bdf775a6d80d4a926c63947c0e9bc, type: 3}
   - soundName: PasBienvenue
     clip: {fileID: 8300000, guid: 080c1c21003ec664c8452e1bb6384212, type: 3}
+  CompleteWave:
+  - soundName: Jackpot
+    clip: {fileID: 8300000, guid: 320b8e38a3851fc43a82b5242e161250, type: 3}
+  - soundName: Bingo
+    clip: {fileID: 8300000, guid: e5c73bc17c2eb0d42a028886b7890e6f, type: 3}
   foleySource: {fileID: 1765621079}
 --- !u!1 &1534632746
 GameObject:
